@@ -1,20 +1,29 @@
-cassandra:
-  image: cassandra:3.9
-  container_name: kong-tests-cassandra
-  ports:
-    - "9042:9042"
+version: '3'
 
-postgres:
-  build: ./postgres
-  container_name: kong-tests-postgres
-  command: postgres -c "config_file=/etc/postgresql/postgresql.conf"
-  volumes:
-    - "$PWD/postgres/postgres.conf:/etc/postgresql/postgresql.conf"
-  ports:
-    - "5432:5432"
+services:
+  cassandra:
+    image: "cassandra:${CASSANDRA_VERSION}"
+    container_name: kong-tests-cassandra
+    #    networks:
+    #  - kong
+    ports:
+      - "9042:9042"
 
-redis:
-  image: redis
-  container_name: kong-tests-redis
-  ports:
-    - "6379:6379"
+  postgres:
+    build: ./postgres
+    container_name: kong-tests-postgres
+    #networks:
+    #  - kong
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis
+    container_name: kong-tests-redis
+    #networks:
+    #  - kong
+    ports:
+      - "6379:6379"
+
+        #networks:
+  #  kong:
